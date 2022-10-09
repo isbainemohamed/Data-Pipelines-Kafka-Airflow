@@ -126,6 +126,31 @@ extract_data_from_tsv = BashOperator(
 )
 ```
 
+- Create a task to extract data from fixed width file
+We will create a task named extract_data_from_fixed_width.
+
+This task should extract the fields Type of Payment code, and Vehicle Code from the fixed width file payment-data.txt and save it into a file named fixed_width_data.csv.
+
+```python
+extract_data_from_fixed_width = BashOperator(
+    task_id='extract_data_from_fixed_width',
+    bash_command='cut -d" " -f17,18 payment-data.txt > /home/project/airflow/dags/finalassignment/fixed_width_data.csv.' ,
+    dag=dag,
+)
+```
+
+- Create a task to consolidate data extracted from previous tasks
+we will create a task named consolidate_data.
+
+This task should create a single csv file named extracted_data.csv by combining data from
+
+csv_data.csv
+tsv_data.csv
+fixed_width_data.csv
+
+The final csv file should use the fields in the order given below:
+
+Rowid, Timestamp, Anonymized Vehicle number, Vehicle type, Number of axles, Tollplaza id, Tollplaza code, Type of Payment code, and Vehicle Code
 
 
 
