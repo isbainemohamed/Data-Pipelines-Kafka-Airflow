@@ -293,7 +293,7 @@ Start zookeeper server with the following command
 cd kafka_2.12-2.8.0
 bin/zookeeper-server-start.sh config/zookeeper.properties
 ```
- SCREEN START ZOOKEEPER
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/4e1b86b61bad27b89277eb39e01e84cf1df5d9b1/images/start_zookeeper.png)
  
 - Step2: Start the Kafka broker service
 Start kafka server with the following command
@@ -302,7 +302,7 @@ Start kafka server with the following command
 cd kafka_2.12-2.8.0
 bin/kafka-server-start.sh config/server.properties
 ```
- SCREEN START SERVER
+ ![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/4e1b86b61bad27b89277eb39e01e84cf1df5d9b1/images/start_kafka.png)
 
 - Step3: Create a topic called Toll
 We need to create a topic before you can start to post messages.
@@ -313,7 +313,7 @@ To create a topic named *toll*, start a new terminal and run the command below.
 cd kafka_2.12-2.8.0
 bin/kafka-topics.sh --create --topic toll --bootstrap-server localhost:9092
 ```
- SCREEN CREATE TOPIC
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/4e1b86b61bad27b89277eb39e01e84cf1df5d9b1/images/create_toll_topic.png)
 
 - Step4: Create a raffic simulator
 We need to create a message generator, create a file called `toll_traffic_generator.py` in put the code below inside it:
@@ -347,7 +347,7 @@ for _ in range(100000):
 ```bash
 python3 toll_traffic_generator.py
 ```
-SCREEN RUN GENERATOR
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/4e1b86b61bad27b89277eb39e01e84cf1df5d9b1/images/simulator_output.png)
 
 - Step5: Create a consumer (traffic reader)
 We need to create a message consumer, create a file called `streaming_data_reader.py` in put the code below inside it:
@@ -403,7 +403,7 @@ connection.close()
 ```bash
 streaming_data_reader.py
 ```
-SCREEN RUN GENERATOR
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/4e1b86b61bad27b89277eb39e01e84cf1df5d9b1/images/data_reader_output.png)
 
 
 ### Health Chekc of the data Pipeline
@@ -418,7 +418,7 @@ select * from livetolldata limit 10;
 ```
 
 SCREEN SQL REQUEST
-
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/4e1b86b61bad27b89277eb39e01e84cf1df5d9b1/images/output_rows.png)
 
 # Conclusion
 
