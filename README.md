@@ -315,8 +315,115 @@ bin/kafka-topics.sh --create --topic toll --bootstrap-server localhost:9092
 ```
  SCREEN CREATE TOPIC
 
+- Step4: Create a raffic simulator
+We need to create a message generator, create a file called `toll_traffic_generator.py` in put the code below inside it:
+
+```python
+"""
+Top Traffic Simulator
+"""
+from time import sleep, time, ctime
+from random import random, randint, choice
+from kafka import KafkaProducer
+producer = KafkaProducer(bootstrap_servers='localhost:9092')
+
+TOPIC = 'toll'
+
+VEHICLE_TYPES = ("car", "car", "car", "car", "car", "car", "car", "car",
+                 "car", "car", "car", "truck", "truck", "truck",
+                 "truck", "van", "van")
+for _ in range(100000):
+    vehicle_id = randint(10000, 10000000)
+    vehicle_type = choice(VEHICLE_TYPES)
+    now = ctime(time())
+    plaza_id = randint(4000, 4010)
+    message = f"{now},{vehicle_id},{vehicle_type},{plaza_id}"
+    message = bytearray(message.encode("utf-8"))
+    print(f"A {vehicle_type} has passed by the toll plaza {plaza_id} at {now}.")
+    producer.send(TOPIC, message)
+    sleep(random() * 2)
+
+```
+```bash
+python3 toll_traffic_generator.py
+```
+SCREEN RUN GENERATOR
+
+- Step5: Create a consumer (traffic reader)
+We need to create a message consumer, create a file called `streaming_data_reader.py` in put the code below inside it:
+
+```python
+"""
+Streaming data consumer
+"""
+from datetime import datetime
+from kafka import KafkaConsumer
+import mysql.connector
+
+TOPIC='toll'
+DATABASE = 'tolldata'
+USERNAME = 'root'
+PASSWORD = 'MTM2MjEtbW9oYW1l'
+
+print("Connecting to the database")
+try:
+    connection = mysql.connector.connect(host='localhost', database=DATABASE, user=USERNAME, password=PASSWORD)
+except Exception:
+    print("Could not connect to database. Please check credentials")
+else:
+    print("Connected to database")
+cursor = connection.cursor()
+
+print("Connecting to Kafka")
+consumer = KafkaConsumer(TOPIC)
+print("Connected to Kafka")
+print(f"Reading messages from the topic {TOPIC}")
+for msg in consumer:
+
+    # Extract information from kafka
+
+    message = msg.value.decode("utf-8")
+
+    # Transform the date format to suit the database schema
+    (timestamp, vehcile_id, vehicle_type, plaza_id) = message.split(",")
+
+    dateobj = datetime.strptime(timestamp, '%a %b %d %H:%M:%S %Y')
+    timestamp = dateobj.strftime("%Y-%m-%d %H:%M:%S")
+
+    # Loading data into the database table
+
+    sql = "insert into livetolldata values(%s,%s,%s,%s)"
+    result = cursor.execute(sql, (timestamp, vehcile_id, vehicle_type, plaza_id))
+    print(f"A {vehicle_type} was inserted into the database")
+    connection.commit()
+connection.close()
 
 
+```
+```bash
+streaming_data_reader.py
+```
+SCREEN RUN GENERATOR
+
+
+### Health Chekc of the data Pipeline
+
+We have done all the steps till here correctly, the streaming toll data would get stored in the table livetolldata.
+
+Let's List the top 10 rows in the table livetolldata.
+
+```mysql
+use tolldata;
+select * from livetolldata limit 10;
+```
+
+SCREEN SQL REQUEST
+
+
+# Conclusion
+
+Congratulations on completing this ETL and Data Pipelines with Airflow and Kafka ! I hope you enjoyed it, please leave me any question in the email below
+isbainemouhamed@gmail.com
 
 
 
