@@ -172,11 +172,39 @@ Create a task named transform_data.
 
 This task should transform the vehicle_type field in extracted_data.csv into capital letters and save it into a file named transformed_data.csv in the staging directory.
 
+
+
 ```python
 transform_data=BashOperator(
     task_id='transform_data',
     bash_command="awk -F',' '{print $1,$2,$3,toupper($4),$5,$6,$7,$8,$9}' /home/project/airflow/dags/finalassignment/staging/extracted_data.csv > /home/project/airflow/dags/finalassignment/staging/transformed_data.csv",
-    dag=dag,
-)```
+    dag=dag,)
+```
+## Submit the dag file
+
+Let's put the dag file in */home/project/ariflow/dags* directory and check dag list using the command
+
+```bash
+airflow dags list
+```
+
+SCREEN SUCCESS
+
+Now let's Unpause the dag :
+
+```bash
+airflow dags unpause ETL_toll_data
+```
+
+SCREEN UNPAUSED
+
+And Finally let's check if everything is OK on the Airflow web interface console
+
+SCREEN UI
+
+
+
+
+
 
 
