@@ -160,6 +160,23 @@ consolidate_data = BashOperator(
     dag=dag,
 )
 ```
+paste command merges lines of files.
 
+Example : paste file1 file2 > newfile
+
+The above command merges the columns of the files file1 and file2 and sends the output to newfile.
+
+- Transform and load the data
+
+Create a task named transform_data.
+
+This task should transform the vehicle_type field in extracted_data.csv into capital letters and save it into a file named transformed_data.csv in the staging directory.
+
+```python
+transform_data=BashOperator(
+    task_id='transform_data',
+    bash_command="awk -F',' '{print $1,$2,$3,toupper($4),$5,$6,$7,$8,$9}' /home/project/airflow/dags/finalassignment/staging/extracted_data.csv > /home/project/airflow/dags/finalassignment/staging/transformed_data.csv",
+    dag=dag,
+)```
 
 
