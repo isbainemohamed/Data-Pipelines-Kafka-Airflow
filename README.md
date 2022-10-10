@@ -284,6 +284,39 @@ python3 -m pip install mysql-connector-python
 This python module will help us to interact with mysql server.
 
 
+### Configure Kafka
+
+- Step1: Start Zookeeper
+Start zookeeper server with the following command
+
+```bash
+cd kafka_2.12-2.8.0
+bin/zookeeper-server-start.sh config/zookeeper.properties
+```
+ SCREEN START ZOOKEEPER
+ 
+- Step2: Start the Kafka broker service
+Start kafka server with the following command
+
+```bash
+cd kafka_2.12-2.8.0
+bin/kafka-server-start.sh config/server.properties
+```
+ SCREEN START SERVER
+
+- Step3: Create a topic called Toll
+We need to create a topic before you can start to post messages.
+
+To create a topic named *toll*, start a new terminal and run the command below.
+
+```bash
+cd kafka_2.12-2.8.0
+bin/kafka-topics.sh --create --topic toll --bootstrap-server localhost:9092
+```
+ SCREEN CREATE TOPIC
+
+
+
 
 
 
