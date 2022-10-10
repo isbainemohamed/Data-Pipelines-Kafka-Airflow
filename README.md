@@ -23,7 +23,7 @@ Load the transformed data into the staging area
 start_airflow
 ```
 
-SCREEN 1 
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/f38df39acad7295b6b8a0ebadd13240a427d0feb/images/1-start_airflow.png)
 
 - Download the dataset from the source to the destination mentioned below.
 Note: While downloading the file in the terminal use the sudo command before the command used to download the file.
@@ -31,7 +31,7 @@ Note: While downloading the file in the terminal use the sudo command before the
 Source : https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0250EN-SkillsNetwork/labs/Final%20Assignment/tolldata.tgz
 Destination : /home/project/airflow/dags/finalassignment
 
-SCREEN 2
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/f38df39acad7295b6b8a0ebadd13240a427d0feb/images/2-download the dataset.png)
 
 - Create a directory structure for staging area as follows
 /home/project/airflow/dags/finalassignment/staging.
@@ -51,13 +51,13 @@ sudo mkdir staging
 cd staging
 sudo mv /home/project/tolldata.tgz /home/project/airflow/dags/finalassignment
 ```
-SCREEN 3
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/f38df39acad7295b6b8a0ebadd13240a427d0feb/images/3-move data to project folder.png)
 ### creating DAG File
 
 - Define DAG arguments
 Let's define the DAG arguments as per the following details:
 
-SCREEN 4
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/f38df39acad7295b6b8a0ebadd13240a427d0feb/images/4-dagsparameters.png)
 
 Here is the code to define DAG arguments
 
@@ -188,7 +188,7 @@ Let's put the dag file in */home/project/ariflow/dags* directory and check dag l
 airflow dags list
 ```
 
-SCREEN SUCCESS
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/f38df39acad7295b6b8a0ebadd13240a427d0feb/images/submit_dag.png)
 
 Now let's Unpause the dag :
 
@@ -196,13 +196,12 @@ Now let's Unpause the dag :
 airflow dags unpause ETL_toll_data
 ```
 
-SCREEN UNPAUSED
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/f38df39acad7295b6b8a0ebadd13240a427d0feb/images/unpause_dag.png)
 
 And Finally let's check if everything is OK on the Airflow web interface console
 
-SCREEN UI
 
-
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/f38df39acad7295b6b8a0ebadd13240a427d0feb/images/dag_runs.png)
 
 
 
