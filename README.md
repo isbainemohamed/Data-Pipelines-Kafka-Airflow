@@ -93,7 +93,7 @@ We will use the downloaded data from the url given before and uncompress it into
 ```python
 unzip_data = BashOperator(
     task_id='unzip_data',
-    bash_command='gunzip tolldata.tgz' ,
+    bash_command='sudo tar -zxvf /home/project/airflow/dags/finalassignment/staging/tolldata.tgz -C /home/project/airflow/dags/finalassignment/staging' ,
     dag=dag,
 )
 ```
@@ -106,7 +106,7 @@ This task should extract the fields Rowid, Timestamp, Anonymized Vehicle number,
 ```python
 extract_data_from_csv = BashOperator(
     task_id='extract_data_from_csv',
-    bash_command='cut -f1,2,3 -d"," vehicle-data.csv > /home/project/airflow/dags/finalassignment/csv_data.csv' ,
+    bash_command='cut -f1,2,3 -d"," /home/project/airflow/dags/finalassignment/staging/vehicle-data.csv > /home/project/airflow/dags/finalassignment/staging/csv_data.csv --output-delimiter=","' ,
     dag=dag,
 )
 ```
@@ -121,7 +121,7 @@ This task should extract the fields Number of axles, Tollplaza id, and Tollplaza
 
 extract_data_from_tsv = BashOperator(
     task_id='extract_data_from_tsv',
-    bash_command='cut -f5,6,7 -d"   " tollplaza-data.tsv > /home/project/airflow/dags/finalassignment/tsv_data.csv' ,
+    bash_command='cut -f5,6,7 -d"   " /home/project/airflow/dags/finalassignment/staging/tollplaza-data.tsv > /home/project/airflow/dags/finalassignment/staging/tsv_data.csv --output-delimiter ","' ,
     dag=dag,
 )
 ```
@@ -132,9 +132,10 @@ We will create a task named extract_data_from_fixed_width.
 This task should extract the fields Type of Payment code, and Vehicle Code from the fixed width file payment-data.txt and save it into a file named fixed_width_data.csv.
 
 ```python
+
 extract_data_from_fixed_width = BashOperator(
     task_id='extract_data_from_fixed_width',
-    bash_command='cut -d" " -f17,18 payment-data.txt > /home/project/airflow/dags/finalassignment/fixed_width_data.csv.' ,
+    bash_command='cut -c 59-61,63-68 /home/project/airflow/dags/finalassignment/staging/payment-data.txt > /home/project/airflow/dags/finalassignment/staging/fixed_width_data.csv --output-delimiter ","' ,
     dag=dag,
 )
 ```
@@ -151,6 +152,14 @@ fixed_width_data.csv
 The final csv file should use the fields in the order given below:
 
 Rowid, Timestamp, Anonymized Vehicle number, Vehicle type, Number of axles, Tollplaza id, Tollplaza code, Type of Payment code, and Vehicle Code
+
+```python
+consolidate_data = BashOperator(
+    task_id='consolidate_data',
+    bash_command='cut -d" " -f17,18 /home/project/airflow/dags/finalassignment/staging/payment-data.txt > /home/project/airflow/dags/finalassignment/staging/fixed_width_data.csv' ,
+    dag=dag,
+)
+```
 
 
 
