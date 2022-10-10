@@ -31,7 +31,7 @@ Note: While downloading the file in the terminal use the sudo command before the
 Source : https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0250EN-SkillsNetwork/labs/Final%20Assignment/tolldata.tgz
 Destination : /home/project/airflow/dags/finalassignment
 
-![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/f38df39acad7295b6b8a0ebadd13240a427d0feb/images/2-download the dataset.png)
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/4446592d035cd1a72477a7878d6ef654d1eed291/images/2-download%20the%20dataset.png)
 
 - Create a directory structure for staging area as follows
 /home/project/airflow/dags/finalassignment/staging.
@@ -51,13 +51,13 @@ sudo mkdir staging
 cd staging
 sudo mv /home/project/tolldata.tgz /home/project/airflow/dags/finalassignment
 ```
-![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/f38df39acad7295b6b8a0ebadd13240a427d0feb/images/3-move data to project folder.png)
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/4446592d035cd1a72477a7878d6ef654d1eed291/images/3-move%20data%20to%20project%20folder.png)
 ### creating DAG File
 
 - Define DAG arguments
 Let's define the DAG arguments as per the following details:
 
-![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/f38df39acad7295b6b8a0ebadd13240a427d0feb/images/4-dagsparameters.png)
+![image](https://github.com/isbainemohamed/Data-Pipelines-Kafka-Airflow/blob/4446592d035cd1a72477a7878d6ef654d1eed291/images/4-dagsparameters.png)
 
 Here is the code to define DAG arguments
 
